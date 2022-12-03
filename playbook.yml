@@ -1,0 +1,38 @@
+---
+
+- hosts: all
+  become: true
+  tasks: 
+
+  - name: Install Updates (Update)
+    apt:
+       upgrade: dist
+       update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install openstack (Keystone)
+    apt:
+      name:
+        - keystone
+        - apache2
+        - php
+        - libapache2-mod-php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install openstack (Glance)
+    apt:
+      name: glance
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install openstack (Nova)
+    apt:
+      name:
+        - nova-compute
+        - python3-openstackclient
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
